@@ -24,12 +24,32 @@ In addition
 
 ### Wireframes 
 
-
+![wireframes](image/homepage.png)
 
 ### Architecture and Technologies
+The project will be implemented with the following technologies: 
 
-
+- Vanilla JavaScript and `jquery` for overall structure and game logic,
+- Webpack to bundle and serve up the various scripts.
 
 ### Implementation Timeline
 
 **Day 1**:
+
+- Set up the environment and build the board object. The goal is to render the grid 
+
+**Day 2**:
+
+- Complete the cell module and make the cell clickable on the screen 
+
+**Day 3**:
+
+- Create the logic backend. Enable the grid to search for blocks qualified for removal and redraw new blocks 
+
+**Day 4**:
+
+- Style the frontend and create control for users to restart the game 
+
+### Bonus features
+
+- [ ] Add options for different difficulty level 
