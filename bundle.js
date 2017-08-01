@@ -65,21 +65,41 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid_view__ = __webpack_require__(4);
 // Wait till the browser is ready to render the game
-// import {GameManager} from "./game_manager";
-// import {HTMLActuator} from './html_actuator.js';
-// import {LocalStorageManager} from './local_storage_manager.js';
 
-// window.requestAnimationFrame(function () {
-//   new GameManager(5, KeyboardInputManager, HTMLActuator, LocalStorageManager);
-// });
 
-const canvas = document.getElementById("canvas"); 
-var context = canvas.getContext('2d');
-context.fillStyle = "#FF0000";
-context.fillRect(0,0,175,175);	
+
+document.addEventListener ("DOMContentLoaded", function(){
+	const canvas = document.getElementById("canvas"); 
+	var context = canvas.getContext('2d');
+	context.fillStyle = "#FF0000";
+	context.fillRect(0,0,175,175);	
+
+	const rootElement = $('.10-root');
+	new __WEBPACK_IMPORTED_MODULE_0__grid_view__["a" /* GridView */](context, rootElement);
+});
+
+
+/***/ }),
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const GridView = function(context, root){
+	this.context = context;
+	this.root = root;
+	this.currenteMousePos = {x: -1, y: -1};
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = GridView;
+
 
 /***/ })
 /******/ ]);
