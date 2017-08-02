@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,37 +68,134 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid__ = __webpack_require__(3);
+
+
+const Game = function(){
+	this.grid = new __WEBPACK_IMPORTED_MODULE_0__grid__["a" /* Grid */];
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Game;
+
+
+Game.prototype.playMove = function(){
+	
+};
+
+Game.prototype.isOver = function(){
+
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid_view__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_view__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__game__ = __webpack_require__(0);
 // Wait till the browser is ready to render the game
 
 
 
 document.addEventListener ("DOMContentLoaded", function(){
-	const canvas = document.getElementById("canvas"); 
-	var context = canvas.getContext('2d');
-	context.fillStyle = "#FF0000";
-	context.fillRect(0,0,175,175);	
 
-	const rootElement = $('.10-root');
-	new __WEBPACK_IMPORTED_MODULE_0__grid_view__["a" /* GridView */](context, rootElement);
+	// if(window.innerHeight < window.innerWidth){
+	// 	Game.X = window.innerHeight * 0.8;
+	// 	Game.Y = window.innerHeight * 0.8;
+	// } else{
+	// 	Game.X = window.innerWidth * 0.8 ;
+	// 	Game.Y = window.innerWidth * 0.8;
+	// }
+
+	const rootElement = $('.root');
+	const game = new __WEBPACK_IMPORTED_MODULE_1__game__["a" /* Game */]();
+	new __WEBPACK_IMPORTED_MODULE_0__game_view__["a" /* GameView */](game, rootElement, 5);
 });
 
 
 /***/ }),
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const GridView = function(context, root){
-	this.context = context;
-	this.root = root;
-	this.currenteMousePos = {x: -1, y: -1};
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game__ = __webpack_require__(0);
+
+
+const GameView = function(game, $el, size){
+	this.game = game;
+	this.$el = $el;
+	this.size = size;
+	this.setupBoard();
+	this.bindEvent();
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = GridView;
+/* harmony export (immutable) */ __webpack_exports__["a"] = GameView;
+
+
+GameView.prototype.bindEvent = function(){
+
+	this.$el.on("click", "li", (event => {
+		const $block = $(event.currentTarget);
+		this.makeMove($block);
+	}));
+};	
+
+GameView.prototype.makeMove = function($block){
+
+	const pos = $block.data("pos");
+	
+	try {
+		this.game.playMove(pos);
+	} catch(e){
+		alert("Invalid move! Try again");
+		return;
+	}
+
+	if(this.game.isOver()){
+		this.$el.off("click");
+		this.$el.addClass("game-over");
+	}
+};
+
+GameView.prototype.setupBoard = function(){
+
+	for(let rowIdx = 0; rowIdx < this.size; rowIdx ++){
+		const $ul = $("<ul>");
+		$ul.addClass("group");
+		for(let colIdx = 0; colIdx < this.size; colIdx ++){
+			let $li = $("<li>");
+			$li.data("pos", [rowIdx, colIdx]);
+
+			$ul.append($li);
+		}
+
+		this.$el.append($ul);
+	}
+
+};
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = Grid;
+
+function Grid (size){
+	this.size = size;
+	this.setup();
+	this.grid = [];
+}
+
+Grid.prototype.setup = function(){
+  for(let i =0; i < this.size; i++) {
+  	this.grid[i] = [];
+  	for(let j=0; j< this.size; j++){
+  		this.grid[i][j] = null;
+  	} 
+  }
+};
+
 
 
 /***/ })

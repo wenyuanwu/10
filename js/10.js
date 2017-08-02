@@ -1,13 +1,18 @@
 // Wait till the browser is ready to render the game
-import {GridView} from './grid_view';
-
+import {GameView} from './game_view';
+import {Game} from './game';
 
 document.addEventListener ("DOMContentLoaded", function(){
-	const canvas = document.getElementById("canvas"); 
-	var context = canvas.getContext('2d');
-	context.fillStyle = "#FF0000";
-	context.fillRect(0,0,175,175);	
 
-	const rootElement = $('.10-root');
-	new GridView(context, rootElement);
+	// if(window.innerHeight < window.innerWidth){
+	// 	Game.X = window.innerHeight * 0.8;
+	// 	Game.Y = window.innerHeight * 0.8;
+	// } else{
+	// 	Game.X = window.innerWidth * 0.8 ;
+	// 	Game.Y = window.innerWidth * 0.8;
+	// }
+
+	const rootElement = $('.root');
+	const game = new Game();
+	new GameView(game, rootElement, 5);
 });
