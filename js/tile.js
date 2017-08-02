@@ -1,6 +1,6 @@
 
-export const Tile = (position, value) => {
-	this.x = this.position.x;
-	this.y = this.position.y;
-	this.value = this.value;
-};
+export function Tile (position, value){
+	this.x = position.x;
+	this.y = position.y;
+	this.value = value;
+}

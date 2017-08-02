@@ -1,8 +1,9 @@
 import {Grid} from './grid';
 import {Tile} from './tile';
 
-export const Game = function(){
-	this.grid = new Grid();
+export const Game = function(size){
+	this.size = size;
+	this.grid = new Grid(size);
 	this.insertTile();
 };
 
@@ -15,14 +16,17 @@ export const Game = function(){
 // };
 
 Game.prototype.insertTile = function(){
+
+	const that = this;
+
 	if(this.grid.blocksAvailable()){
 
-		var emptyBlocks = this.grid.emptyBlocks;
+		const emptyBlocks = this.grid.emptyBlocks();
 
-		emptyBlocks.this.grid.forEach(function(block){
+		emptyBlocks.forEach(function(block){
 			// assign randomNumber
-			var randomNumber = Math.random();
-			var value;
+			const randomNumber = Math.random();
+			let value;
 			if(randomNumber < 0.5){
 				value = 1; 
 			} else if (randomNumber < 0.8){
@@ -32,16 +36,16 @@ Game.prototype.insertTile = function(){
 			} else{
 				value = 4;
 			}
-
-			var tile = new Tile({x: block.x, y: block.y}, value);
-
-			this.grid.insertTile(tile);
+			const tile = new Tile(block, value);
+			that.grid.insertTile(tile);
 		});
 	}
+
+	// console.log(this.grid);
 };
 
 Game.prototype.shareBorderBlocks = function(pos){
-
+	
 };
 
 Game.prototype.isValidMove = function(pos){

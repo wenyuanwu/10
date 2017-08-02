@@ -1,15 +1,15 @@
 
 export function Grid (size){
 	this.size = size;
-	this.setup();
 	this.rows = [];
+	this.setup();
 }
 
 Grid.prototype.setup = function(){
   for(let i =0; i < this.size; i++) {
-  	this.rows[i] = [];
+  	  	this.rows[i] = [];
   	for(let j=0; j< this.size; j++){
-  		this.rows[i][j] = null;
+  		this.rows[i].push(null);
   	} 
   }
 };
@@ -37,7 +37,7 @@ Grid.prototype.emptyBlocks = function(){
 };
 
 Grid.prototype.blocksAvailable = function(){
-	!(this.emptyBlocks().length === 0); 
+	return (this.emptyBlocks().length !== 0); 
 };
 
 Grid.prototype.insertTile = function(tile){

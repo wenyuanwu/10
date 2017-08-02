@@ -13,6 +13,6 @@ document.addEventListener ("DOMContentLoaded", function(){
 	// }
 
 	const rootElement = $('.root');
-	const game = new Game();
+	const game = new Game(5);
 	new GameView(game, rootElement, 5);
 });

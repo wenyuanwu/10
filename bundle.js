@@ -73,8 +73,9 @@
 
 
 
-const Game = function(){
-	this.grid = new __WEBPACK_IMPORTED_MODULE_0__grid__["a" /* Grid */]();
+const Game = function(size){
+	this.size = size;
+	this.grid = new __WEBPACK_IMPORTED_MODULE_0__grid__["a" /* Grid */](size);
 	this.insertTile();
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Game;
@@ -89,14 +90,17 @@ const Game = function(){
 // };
 
 Game.prototype.insertTile = function(){
+
+	const that = this;
+
 	if(this.grid.blocksAvailable()){
 
-		var emptyBlocks = this.grid.emptyBlocks;
+		const emptyBlocks = this.grid.emptyBlocks();
 
-		emptyBlocks.this.grid.forEach(function(block){
+		emptyBlocks.forEach(function(block){
 			// assign randomNumber
-			var randomNumber = Math.random();
-			var value;
+			const randomNumber = Math.random();
+			let value;
 			if(randomNumber < 0.5){
 				value = 1; 
 			} else if (randomNumber < 0.8){
@@ -106,16 +110,16 @@ Game.prototype.insertTile = function(){
 			} else{
 				value = 4;
 			}
-
-			var tile = new __WEBPACK_IMPORTED_MODULE_1__tile__["a" /* Tile */]({x: block.x, y: block.y}, value);
-
-			this.grid.insertTile(tile);
+			const tile = new __WEBPACK_IMPORTED_MODULE_1__tile__["a" /* Tile */](block, value);
+			that.grid.insertTile(tile);
 		});
 	}
+
+	// console.log(this.grid);
 };
 
 Game.prototype.shareBorderBlocks = function(pos){
-
+	
 };
 
 Game.prototype.isValidMove = function(pos){
@@ -149,7 +153,7 @@ document.addEventListener ("DOMContentLoaded", function(){
 	// }
 
 	const rootElement = $('.root');
-	const game = new __WEBPACK_IMPORTED_MODULE_1__game__["a" /* Game */]();
+	const game = new __WEBPACK_IMPORTED_MODULE_1__game__["a" /* Game */](5);
 	new __WEBPACK_IMPORTED_MODULE_0__game_view__["a" /* GameView */](game, rootElement, 5);
 });
 
@@ -224,15 +228,15 @@ GameView.prototype.setupBoard = function(){
 
 function Grid (size){
 	this.size = size;
-	this.setup();
 	this.rows = [];
+	this.setup();
 }
 
 Grid.prototype.setup = function(){
   for(let i =0; i < this.size; i++) {
-  	this.rows[i] = [];
+  	  	this.rows[i] = [];
   	for(let j=0; j< this.size; j++){
-  		this.rows[i][j] = null;
+  		this.rows[i].push(null);
   	} 
   }
 };
@@ -260,7 +264,7 @@ Grid.prototype.emptyBlocks = function(){
 };
 
 Grid.prototype.blocksAvailable = function(){
-	!(this.emptyBlocks().length === 0); 
+	return (this.emptyBlocks().length !== 0); 
 };
 
 Grid.prototype.insertTile = function(tile){
@@ -305,14 +309,13 @@ Grid.prototype.withinBounds = function (pos) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-const Tile = (position, value) => {
-	this.x = this.position.x;
-	this.y = this.position.y;
-	this.value = this.value;
-};
 /* harmony export (immutable) */ __webpack_exports__["a"] = Tile;
 
+function Tile (position, value){
+	this.x = position.x;
+	this.y = position.y;
+	this.value = value;
+}
 
 /***/ })
 /******/ ]);
