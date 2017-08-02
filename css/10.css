@@ -50,11 +50,52 @@ body {
  	border: 1px solid white;
  	list-style-type: none;
  	cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
   z-index: 1;
  }
 
  .tile {
   z-index: 2;
-  color: red;
+  color: white;
+ }  
+
+ [id="1"]{
+  background-color: rgb(249,189,154);
  }
 
+ [id="2"]{
+  background-color: rgb(255,188,179);
+ }
+
+ [id="3"]{
+  background-color: rgb(213,194,180);
+ }
+
+ [id="4"]{
+  background-color: rgb(163,231,239);
+ }
+
+ [id="5"]{
+  background-color: rgb(123,205,226);
+ }
+
+ [id="6"]{
+  background-color: rgb(63,208,167);
+ }
+
+ [id="7"]{
+  background-color: rgb(200,217,1);
+ }
+
+ [id="8"]{
+  background-color: rgb(246,217,19);
+ }
+
+ [id="9"]{
+  background-color: rgb(247,165,4);
+ }
+
+ [id="10"]{
+  background-color: rgb(254,9,86);
+ }

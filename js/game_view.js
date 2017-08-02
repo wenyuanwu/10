@@ -69,6 +69,7 @@ GameView.prototype.addTile = function(block){
 	var className = "tile " + "tile-position-"+ block.x + "-" + block.y + " value-" + block.value;
 	this.applyClass(inner,className);
 	var li = document.getElementsByClassName(block.x + "-" + block.y)[0];	
+	li.setAttribute("id", block.value);
 	$(li).wrapInner(inner);
 };
 

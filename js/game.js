@@ -40,11 +40,7 @@ Game.prototype.insertTile = function(){
 			const tile = new Tile(block, value);
 			that.grid.insertTile(tile);
 		});
-
-
 	}
-	
-	// console.log(this.grid);
 };
 
 Game.prototype.shareBorderBlocks = function(pos){

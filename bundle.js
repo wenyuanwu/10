@@ -115,11 +115,7 @@ Game.prototype.insertTile = function(){
 			const tile = new __WEBPACK_IMPORTED_MODULE_1__tile__["a" /* Tile */](block, value);
 			that.grid.insertTile(tile);
 		});
-
-
 	}
-	
-	// console.log(this.grid);
 };
 
 Game.prototype.shareBorderBlocks = function(pos){
@@ -241,6 +237,7 @@ GameView.prototype.addTile = function(block){
 	var className = "tile " + "tile-position-"+ block.x + "-" + block.y + " value-" + block.value;
 	this.applyClass(inner,className);
 	var li = document.getElementsByClassName(block.x + "-" + block.y)[0];	
+	li.setAttribute("id", block.value);
 	$(li).wrapInner(inner);
 };
 
