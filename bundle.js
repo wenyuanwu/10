@@ -69,20 +69,61 @@
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tile__ = __webpack_require__(4);
+
 
 
 const Game = function(){
-	this.grid = new __WEBPACK_IMPORTED_MODULE_0__grid__["a" /* Grid */];
+	this.grid = new __WEBPACK_IMPORTED_MODULE_0__grid__["a" /* Grid */]();
+	this.insertTile();
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Game;
 
 
-Game.prototype.playMove = function(){
-	
+// Game.prototype.playMove = function(){
+// 	if(this.isValidMove){
+
+// 	} else{
+
+// 	}
+// };
+
+Game.prototype.insertTile = function(){
+	if(this.grid.blocksAvailable()){
+
+		var emptyBlocks = this.grid.emptyBlocks;
+
+		emptyBlocks.this.grid.forEach(function(block){
+			// assign randomNumber
+			var randomNumber = Math.random();
+			var value;
+			if(randomNumber < 0.5){
+				value = 1; 
+			} else if (randomNumber < 0.8){
+				value = 2;
+			} else if (randomNumber < 0.95){
+				value = 3;
+			} else{
+				value = 4;
+			}
+
+			var tile = new __WEBPACK_IMPORTED_MODULE_1__tile__["a" /* Tile */]({x: block.x, y: block.y}, value);
+
+			this.grid.insertTile(tile);
+		});
+	}
+};
+
+Game.prototype.shareBorderBlocks = function(pos){
+
+};
+
+Game.prototype.isValidMove = function(pos){
+	!!this.shareBorderBlocks(pos);
 };
 
 Game.prototype.isOver = function(){
-
+	return this.grid.isOver();
 };
 
 /***/ }),
@@ -184,18 +225,93 @@ GameView.prototype.setupBoard = function(){
 function Grid (size){
 	this.size = size;
 	this.setup();
-	this.grid = [];
+	this.rows = [];
 }
 
 Grid.prototype.setup = function(){
   for(let i =0; i < this.size; i++) {
-  	this.grid[i] = [];
+  	this.rows[i] = [];
   	for(let j=0; j< this.size; j++){
-  		this.grid[i][j] = null;
+  		this.rows[i][j] = null;
   	} 
   }
 };
 
+Grid.prototype.isOver = function(){
+	this.eachBlock(function(x,y,tile){
+		if(tile.value === 10){
+			return true;
+		}
+	});
+
+	return false;
+};
+
+// check blocks need to be filled
+
+Grid.prototype.emptyBlocks = function(){
+	var blocks = [];
+	this.eachBlock(function(x,y,tile){
+		if(!tile){
+			blocks.push({x: x, y: y});
+		}
+	});
+	return blocks;
+};
+
+Grid.prototype.blocksAvailable = function(){
+	!(this.emptyBlocks().length === 0); 
+};
+
+Grid.prototype.insertTile = function(tile){
+	this.rows[tile.x][tile.y] = tile;
+};
+
+Grid.prototype.removeTile = function(tile){
+	this.rows[tile.x][tile.y] = null;
+};
+
+
+// helper method
+
+Grid.prototype.eachBlock = function(callback){
+	for (var x=0; x< this.size; x++){
+		for(var y=0; y< this.size; y++){
+			callback(x,y,this.rows[x][y]);
+		}
+	}
+};
+
+Grid.prototype.withinBounds = function (pos) {
+  return pos.x >= 0 && pos.x < this.size &&
+         pos.y >= 0 && pos.y < this.size;
+};
+
+// Grid.prototype.serialize = function(){
+// 	var blocks = [];
+
+// 	for (var x = 0; x < this.size; x++){
+// 		var row = blocks[x] = [];
+// 		for(var y=0; y < this.size; y++){
+// 			row.push(this.rows[x][y]? this.rows[x][y].serialize() : null);
+// 		}
+// 	}
+// };
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const Tile = (position, value) => {
+	this.x = this.position.x;
+	this.y = this.position.y;
+	this.value = this.value;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Tile;
 
 
 /***/ })
