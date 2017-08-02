@@ -207,22 +207,20 @@ GameView.prototype.makeMove = function($block){
 };
 
 GameView.prototype.setupBoard = function(){
+	// console.log("this.game.grid", this.game.grid);
 
 	for(let rowIdx = 0; rowIdx < this.size; rowIdx ++){
 		const $ul = $("<ul>");
 		$ul.addClass("group");
 		for(let colIdx = 0; colIdx < this.size; colIdx ++){
-			let $li = $("<li>");
+			var li = document.createElement("li");
+			li.setAttribute("class",rowIdx + "-" + colIdx);
+			let $li = $(li);
 			$li.data("pos", [rowIdx, colIdx]);
-
-			$ul.append($li);
-		}
-
+			$ul.append($li);	
+		}	
 		this.$el.append($ul);
-		}
-	// const $tileContainer = $("<div>");
-	// $tileContainer.addClass("tileContainer");
-	// this.$el.append($tileContainer);	
+		}	
 };
 
 GameView.prototype.updateTile = function(grid){
@@ -242,9 +240,8 @@ GameView.prototype.addTile = function(block){
 	inner.textContent = block.value;
 	var className = "tile " + "tile-position-"+ block.x + "-" + block.y + " value-" + block.value;
 	this.applyClass(inner,className);
-	var tileContainer = document.getElementsByClassName("tileContainer")[0];
-	console.log(tileContainer,"tileContainer");
-	tileContainer.appendChild(inner);
+	var li = document.getElementsByClassName(block.x + "-" + block.y)[0];	
+	$(li).wrapInner(inner);
 };
 
 GameView.prototype.applyClass = function(element, className){

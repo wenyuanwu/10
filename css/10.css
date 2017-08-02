@@ -15,6 +15,7 @@ body {
 .wrapper{
 	height: 100%;
 	width: 100%;
+  position: relative;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -50,12 +51,6 @@ body {
  	list-style-type: none;
  	cursor: pointer;
   z-index: 1;
- }
-
- .tileContainer{
-  display: flex;
-  flex-direction: row;
-  z-index: 2;
  }
 
  .tile {
