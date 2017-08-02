@@ -5,6 +5,7 @@ export const GameView = function(game, $el, size){
 	this.$el = $el;
 	this.size = size;
 	this.setupBoard();
+	this.updateTile(this.game.grid);
 	this.bindEvent();
 };
 
@@ -19,7 +20,7 @@ GameView.prototype.bindEvent = function(){
 GameView.prototype.makeMove = function($block){
 
 	const pos = $block.data("pos");
-	
+
 	try {
 		this.game.playMove(pos);
 	} catch(e){
@@ -46,6 +47,35 @@ GameView.prototype.setupBoard = function(){
 		}
 
 		this.$el.append($ul);
-	}
-
+		}
+	// const $tileContainer = $("<div>");
+	// $tileContainer.addClass("tileContainer");
+	// this.$el.append($tileContainer);	
 };
+
+GameView.prototype.updateTile = function(grid){
+	const that = this;
+
+	grid.rows.forEach(function (row) {
+      row.forEach(function (block) {
+        if (block) {
+          that.addTile(block);
+        }
+      });
+    });
+};
+
+GameView.prototype.addTile = function(block){	
+	var inner = document.createElement("div");
+	inner.textContent = block.value;
+	var className = "tile " + "tile-position-"+ block.x + "-" + block.y + " value-" + block.value;
+	this.applyClass(inner,className);
+	var tileContainer = document.getElementsByClassName("tileContainer")[0];
+	console.log(tileContainer,"tileContainer");
+	tileContainer.appendChild(inner);
+};
+
+GameView.prototype.applyClass = function(element, className){
+	element.setAttribute("class", className);
+};
+

@@ -70,6 +70,8 @@
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tile__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game_view__ = __webpack_require__(2);
+
 
 
 
@@ -113,13 +115,15 @@ Game.prototype.insertTile = function(){
 			const tile = new __WEBPACK_IMPORTED_MODULE_1__tile__["a" /* Tile */](block, value);
 			that.grid.insertTile(tile);
 		});
-	}
 
+
+	}
+	
 	// console.log(this.grid);
 };
 
 Game.prototype.shareBorderBlocks = function(pos){
-	
+
 };
 
 Game.prototype.isValidMove = function(pos){
@@ -171,6 +175,7 @@ const GameView = function(game, $el, size){
 	this.$el = $el;
 	this.size = size;
 	this.setupBoard();
+	this.updateTile(this.game.grid);
 	this.bindEvent();
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = GameView;
@@ -187,7 +192,7 @@ GameView.prototype.bindEvent = function(){
 GameView.prototype.makeMove = function($block){
 
 	const pos = $block.data("pos");
-	
+
 	try {
 		this.game.playMove(pos);
 	} catch(e){
@@ -214,9 +219,38 @@ GameView.prototype.setupBoard = function(){
 		}
 
 		this.$el.append($ul);
-	}
-
+		}
+	// const $tileContainer = $("<div>");
+	// $tileContainer.addClass("tileContainer");
+	// this.$el.append($tileContainer);	
 };
+
+GameView.prototype.updateTile = function(grid){
+	const that = this;
+
+	grid.rows.forEach(function (row) {
+      row.forEach(function (block) {
+        if (block) {
+          that.addTile(block);
+        }
+      });
+    });
+};
+
+GameView.prototype.addTile = function(block){	
+	var inner = document.createElement("div");
+	inner.textContent = block.value;
+	var className = "tile " + "tile-position-"+ block.x + "-" + block.y + " value-" + block.value;
+	this.applyClass(inner,className);
+	var tileContainer = document.getElementsByClassName("tileContainer")[0];
+	console.log(tileContainer,"tileContainer");
+	tileContainer.appendChild(inner);
+};
+
+GameView.prototype.applyClass = function(element, className){
+	element.setAttribute("class", className);
+};
+
 
 
 /***/ }),

@@ -1,5 +1,6 @@
 import {Grid} from './grid';
 import {Tile} from './tile';
+import {GameView} from './game_view';
 
 export const Game = function(size){
 	this.size = size;
@@ -39,13 +40,15 @@ Game.prototype.insertTile = function(){
 			const tile = new Tile(block, value);
 			that.grid.insertTile(tile);
 		});
-	}
 
+
+	}
+	
 	// console.log(this.grid);
 };
 
 Game.prototype.shareBorderBlocks = function(pos){
-	
+
 };
 
 Game.prototype.isValidMove = function(pos){
