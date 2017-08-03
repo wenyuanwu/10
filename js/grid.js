@@ -45,15 +45,36 @@ Grid.prototype.insertTile = function(tile){
 };
 
 Grid.prototype.removeTile = function(tile){
-	this.rows[tile.x][tile.y] = null;
+	this.rows[tile.x][tile.y] = null;	
+};
+
+Grid.prototype.reArrange = function(){
+	// add logic of the removed tile!
+	
+	let newArr=[];
+	for(let x=0; x < this.size; x++){
+		newArr[x] = [];
+		for(let y=0; y< this.size; y++){
+			if(this.rows[x][y]){
+				newArr[x].push(this.rows[x][y]);
+			}
+		}
+
+		while(newArr[x].length !== 5){
+			newArr[x].push(null);
+		}
+
+	}
+
+	this.rows = newArr;
 };
 
 
 // helper method
 
 Grid.prototype.eachBlock = function(callback){
-	for (var x=0; x< this.size; x++){
-		for(var y=0; y< this.size; y++){
+	for (let x=0; x< this.size; x++){
+		for(let y=0; y< this.size; y++){
 			callback(x,y,this.rows[x][y]);
 		}
 	}
@@ -64,14 +85,6 @@ Grid.prototype.withinBounds = function (pos) {
          pos.y >= 0 && pos.y < this.size;
 };
 
-// Grid.prototype.serialize = function(){
-// 	var blocks = [];
 
-// 	for (var x = 0; x < this.size; x++){
-// 		var row = blocks[x] = [];
-// 		for(var y=0; y < this.size; y++){
-// 			row.push(this.rows[x][y]? this.rows[x][y].serialize() : null);
-// 		}
-// 	}
 // };
 

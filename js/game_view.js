@@ -20,9 +20,10 @@ GameView.prototype.bindEvent = function(){
 GameView.prototype.makeMove = function($block){
 
 	const pos = $block.data("pos");
-	console.log(this.game.grid.rows, "grid!!");
+	// console.log(this.game.grid.rows, "grid!!");
 	try {
 		this.game.playMove(pos);
+		this.updateTile(this.game.grid);
 	} catch(e){
 		alert("Invalid move! Try again");
 		return;
@@ -69,6 +70,7 @@ GameView.prototype.addTile = function(block){
 	this.applyClass(inner,className);
 	var li = document.getElementsByClassName(block.x + "-" + block.y)[0];	
 	li.setAttribute("id", block.value);
+	$(li).empty();
 	$(li).wrapInner(inner);
 };
 

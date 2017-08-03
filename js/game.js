@@ -1,6 +1,6 @@
 import {Grid} from './grid';
 import {Tile} from './tile';
-import {GameView} from './game_view';
+
 
 export const Game = function(size){
 	this.size = size;
@@ -12,13 +12,16 @@ Game.prototype.playMove = function(pos){
 	// console.log("grid-before-function", this.grid.rows);
 	const shareBorderBlocks = this.shareBorderBlocks(this.grid.rows, pos);
 	const that = this;
+	// console.log(shareBorderBlocks,"shareBorderBlocks");
 	if(shareBorderBlocks.length > 1){
 		shareBorderBlocks.forEach(
 			function(block_pos){
 				that.removeTile({x: block_pos[0], y: block_pos[1]});
 			});
-	// console.log(this.grid.rows, "grid-after");
-	this.reArrange();
+		this.reArrange();
+		// console.log(this.grid.rows, "grid-after");
+		this.insertTile();
+
 	} else{	
 		throw new Error('error');
 	}
@@ -98,12 +101,9 @@ Game.prototype.shareBorderBlocks = function(arr, pos){
 	return shareBorderBlocks;
 };
 
-// Game.prototype.isValidMove = (arr, pos) => {
-// 	!!(this.shareBorderBlocks(arr, pos));
-// };
 
 Game.prototype.reArrange = function(){
-	return null;
+	return this.grid.reArrange();
 };
 
 Game.prototype.isOver = function(){

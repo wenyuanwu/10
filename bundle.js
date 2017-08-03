@@ -70,7 +70,6 @@
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tile__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game_view__ = __webpack_require__(2);
 
 
 
@@ -87,13 +86,16 @@ Game.prototype.playMove = function(pos){
 	// console.log("grid-before-function", this.grid.rows);
 	const shareBorderBlocks = this.shareBorderBlocks(this.grid.rows, pos);
 	const that = this;
+	// console.log(shareBorderBlocks,"shareBorderBlocks");
 	if(shareBorderBlocks.length > 1){
 		shareBorderBlocks.forEach(
 			function(block_pos){
 				that.removeTile({x: block_pos[0], y: block_pos[1]});
 			});
-	// console.log(this.grid.rows, "grid-after");
-	this.reArrange();
+		this.reArrange();
+		// console.log(this.grid.rows, "grid-after");
+		this.insertTile();
+
 	} else{	
 		throw new Error('error');
 	}
@@ -173,12 +175,9 @@ Game.prototype.shareBorderBlocks = function(arr, pos){
 	return shareBorderBlocks;
 };
 
-// Game.prototype.isValidMove = (arr, pos) => {
-// 	!!(this.shareBorderBlocks(arr, pos));
-// };
 
 Game.prototype.reArrange = function(){
-	return null;
+	return this.grid.reArrange();
 };
 
 Game.prototype.isOver = function(){
@@ -247,9 +246,10 @@ GameView.prototype.bindEvent = function(){
 GameView.prototype.makeMove = function($block){
 
 	const pos = $block.data("pos");
-	console.log(this.game.grid.rows, "grid!!");
+	// console.log(this.game.grid.rows, "grid!!");
 	try {
 		this.game.playMove(pos);
+		this.updateTile(this.game.grid);
 	} catch(e){
 		alert("Invalid move! Try again");
 		return;
@@ -296,6 +296,7 @@ GameView.prototype.addTile = function(block){
 	this.applyClass(inner,className);
 	var li = document.getElementsByClassName(block.x + "-" + block.y)[0];	
 	li.setAttribute("id", block.value);
+	$(li).empty();
 	$(li).wrapInner(inner);
 };
 
@@ -358,15 +359,36 @@ Grid.prototype.insertTile = function(tile){
 };
 
 Grid.prototype.removeTile = function(tile){
-	this.rows[tile.x][tile.y] = null;
+	this.rows[tile.x][tile.y] = null;	
+};
+
+Grid.prototype.reArrange = function(){
+	// add logic of the removed tile!
+	
+	let newArr=[];
+	for(let x=0; x < this.size; x++){
+		newArr[x] = [];
+		for(let y=0; y< this.size; y++){
+			if(this.rows[x][y]){
+				newArr[x].push(this.rows[x][y]);
+			}
+		}
+
+		while(newArr[x].length !== 5){
+			newArr[x].push(null);
+		}
+
+	}
+
+	this.rows = newArr;
 };
 
 
 // helper method
 
 Grid.prototype.eachBlock = function(callback){
-	for (var x=0; x< this.size; x++){
-		for(var y=0; y< this.size; y++){
+	for (let x=0; x< this.size; x++){
+		for(let y=0; y< this.size; y++){
 			callback(x,y,this.rows[x][y]);
 		}
 	}
@@ -377,15 +399,7 @@ Grid.prototype.withinBounds = function (pos) {
          pos.y >= 0 && pos.y < this.size;
 };
 
-// Grid.prototype.serialize = function(){
-// 	var blocks = [];
 
-// 	for (var x = 0; x < this.size; x++){
-// 		var row = blocks[x] = [];
-// 		for(var y=0; y < this.size; y++){
-// 			row.push(this.rows[x][y]? this.rows[x][y].serialize() : null);
-// 		}
-// 	}
 // };
 
 
