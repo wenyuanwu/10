@@ -1,3 +1,4 @@
+import {Tile} from './tile';
 
 export function Grid (size){
 	this.size = size;
@@ -50,13 +51,14 @@ Grid.prototype.removeTile = function(tile){
 
 Grid.prototype.reArrange = function(){
 	// add logic of the removed tile!
-	
+
 	let newArr=[];
 	for(let x=0; x < this.size; x++){
 		newArr[x] = [];
 		for(let y=0; y< this.size; y++){
 			if(this.rows[x][y]){
-				newArr[x].push(this.rows[x][y]);
+				let tile = new Tile({x: x, y: newArr[x].length}, this.rows[x][y].value);
+				newArr[x].push(tile);
 			}
 		}
 

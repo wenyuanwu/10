@@ -53,7 +53,7 @@ GameView.prototype.setupBoard = function(){
 
 GameView.prototype.updateTile = function(grid){
 	const that = this;
-
+    // console.log("row-view", grid.rows);
 	grid.rows.forEach(function (row) {
       row.forEach(function (block) {
         if (block) {

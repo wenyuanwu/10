@@ -18,8 +18,9 @@ Game.prototype.playMove = function(pos){
 			function(block_pos){
 				that.removeTile({x: block_pos[0], y: block_pos[1]});
 			});
+		// console.log(this.grid.rows, "arrange-before");
 		this.reArrange();
-		// console.log(this.grid.rows, "grid-after");
+		// console.log(this.grid.rows, "arrange-after");
 		this.insertTile();
 
 	} else{	

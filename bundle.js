@@ -92,8 +92,9 @@ Game.prototype.playMove = function(pos){
 			function(block_pos){
 				that.removeTile({x: block_pos[0], y: block_pos[1]});
 			});
+		// console.log(this.grid.rows, "arrange-before");
 		this.reArrange();
-		// console.log(this.grid.rows, "grid-after");
+		// console.log(this.grid.rows, "arrange-after");
 		this.insertTile();
 
 	} else{	
@@ -279,7 +280,7 @@ GameView.prototype.setupBoard = function(){
 
 GameView.prototype.updateTile = function(grid){
 	const that = this;
-
+    // console.log("row-view", grid.rows);
 	grid.rows.forEach(function (row) {
       row.forEach(function (block) {
         if (block) {
@@ -312,6 +313,8 @@ GameView.prototype.applyClass = function(element, className){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = Grid;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tile__ = __webpack_require__(4);
+
 
 function Grid (size){
 	this.size = size;
@@ -364,13 +367,14 @@ Grid.prototype.removeTile = function(tile){
 
 Grid.prototype.reArrange = function(){
 	// add logic of the removed tile!
-	
+
 	let newArr=[];
 	for(let x=0; x < this.size; x++){
 		newArr[x] = [];
 		for(let y=0; y< this.size; y++){
 			if(this.rows[x][y]){
-				newArr[x].push(this.rows[x][y]);
+				let tile = new __WEBPACK_IMPORTED_MODULE_0__tile__["a" /* Tile */]({x: x, y: newArr[x].length}, this.rows[x][y].value);
+				newArr[x].push(tile);
 			}
 		}
 
