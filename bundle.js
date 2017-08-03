@@ -84,10 +84,18 @@ const Game = function(size){
 
 
 Game.prototype.playMove = function(pos){
-	if(this.isValidMove(pos)){
-
-	} else{
-
+	// console.log("grid-before-function", this.grid.rows);
+	const shareBorderBlocks = this.shareBorderBlocks(this.grid.rows, pos);
+	const that = this;
+	if(shareBorderBlocks.length > 1){
+		shareBorderBlocks.forEach(
+			function(block_pos){
+				that.removeTile({x: block_pos[0], y: block_pos[1]});
+			});
+	// console.log(this.grid.rows, "grid-after");
+	this.reArrange();
+	} else{	
+		throw new Error('error');
 	}
 };
 
@@ -147,7 +155,7 @@ Game.prototype.shareBorderBlocks = function(arr, pos){
 					taken[newPos[0]][newPos[1]]) {
 					return;
 				} 
-				if (arr[newPos[0]][newPos[1]] === arr[x][y]){
+				if (arr[newPos[0]][newPos[1]].value === arr[x][y].value){
 					tempQue.push(newPos);
 					taken[newPos[0]][newPos[1]] = true;
 				}
@@ -165,12 +173,20 @@ Game.prototype.shareBorderBlocks = function(arr, pos){
 	return shareBorderBlocks;
 };
 
-Game.prototype.isValidMove = function(pos){
-	!!this.shareBorderBlocks(pos);
+// Game.prototype.isValidMove = (arr, pos) => {
+// 	!!(this.shareBorderBlocks(arr, pos));
+// };
+
+Game.prototype.reArrange = function(){
+	return null;
 };
 
 Game.prototype.isOver = function(){
 	return this.grid.isOver();
+};
+
+Game.prototype.removeTile = function(tile){
+	return this.grid.removeTile(tile);
 };
 
 /***/ }),
@@ -231,7 +247,7 @@ GameView.prototype.bindEvent = function(){
 GameView.prototype.makeMove = function($block){
 
 	const pos = $block.data("pos");
-
+	console.log(this.game.grid.rows, "grid!!");
 	try {
 		this.game.playMove(pos);
 	} catch(e){
@@ -313,7 +329,7 @@ Grid.prototype.setup = function(){
 
 Grid.prototype.isOver = function(){
 	this.eachBlock(function(x,y,tile){
-		if(tile.value === 10){
+		if(tile && tile.value === 10){
 			return true;
 		}
 	});

@@ -20,7 +20,7 @@ GameView.prototype.bindEvent = function(){
 GameView.prototype.makeMove = function($block){
 
 	const pos = $block.data("pos");
-
+	console.log(this.game.grid.rows, "grid!!");
 	try {
 		this.game.playMove(pos);
 	} catch(e){

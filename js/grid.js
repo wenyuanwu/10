@@ -16,7 +16,7 @@ Grid.prototype.setup = function(){
 
 Grid.prototype.isOver = function(){
 	this.eachBlock(function(x,y,tile){
-		if(tile.value === 10){
+		if(tile && tile.value === 10){
 			return true;
 		}
 	});
