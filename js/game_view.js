@@ -35,7 +35,6 @@ GameView.prototype.makeMove = function($block){
 };
 
 GameView.prototype.setupBoard = function(){
-	// console.log("this.game.grid", this.game.grid);
 
 	for(let rowIdx = 0; rowIdx < this.size; rowIdx ++){
 		const $ul = $("<ul>");
