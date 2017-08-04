@@ -83,18 +83,14 @@ const Game = function(size){
 
 
 Game.prototype.playMove = function(pos){
-	// console.log("grid-before-function", this.grid.rows);
 	const shareBorderBlocks = this.shareBorderBlocks(this.grid.rows, pos);
 	const that = this;
-	// console.log(shareBorderBlocks,"shareBorderBlocks");
 	if(shareBorderBlocks.length > 1){
 		shareBorderBlocks.forEach(
 			function(block_pos){
 				that.removeTile({x: block_pos[0], y: block_pos[1]});
 			});
-		// console.log(this.grid.rows, "arrange-before");
 		this.reArrange();
-		// console.log(this.grid.rows, "arrange-after");
 		this.insertTile();
 
 	} else{	
@@ -111,7 +107,6 @@ Game.prototype.insertTile = function(){
 		const emptyBlocks = this.grid.emptyBlocks();
 
 		emptyBlocks.forEach(function(block){
-			// assign randomNumber
 			const randomNumber = Math.random();
 			let value;
 			if(randomNumber < 0.5){
