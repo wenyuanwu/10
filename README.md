@@ -16,7 +16,9 @@
 
 4) The cluster of the block would be removed all together and replaced by one block with the value as the original value plus 1 
 
-### Implementation  
+### Technology & Implementation  
+
+The game is written by vanilla Javascript and JQuery 
 
 #### Gameboard layout 
 
