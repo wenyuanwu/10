@@ -25,7 +25,9 @@ GameView.prototype.makeMove = function($block){
 		this.game.playMove(pos);
 		this.updateTile(this.game.grid);
 	} catch(e){
-		alert("Invalid move! Try again");
+		let msg = document.querySelector('#msg');
+		msg.textContent = "Invalid move! Try again";
+		setTimeout(this.removeAlert.bind(this), 1000);
 		return;
 	}
 
@@ -33,6 +35,11 @@ GameView.prototype.makeMove = function($block){
 		this.$el.off("click");
 		this.$el.addClass("game-over");
 	}
+};
+
+GameView.prototype.removeAlert = function(){
+	let msg = document.querySelector('#msg');
+	msg.textContent = "";
 };
 
 GameView.prototype.setupBoard = function(){
