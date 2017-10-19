@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,8 +68,8 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tile__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__grid__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tile__ = __webpack_require__(1);
 
 
 
@@ -189,8 +189,21 @@ Game.prototype.removeTile = function(tile){
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = Tile;
+
+function Tile (position, value){
+	this.x = position.x;
+	this.y = position.y;
+	this.value = value;
+}
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_view__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_view__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__game__ = __webpack_require__(0);
 // Wait till the browser is ready to render the game
 
@@ -213,7 +226,7 @@ document.addEventListener ("DOMContentLoaded", function(){
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -247,7 +260,9 @@ GameView.prototype.makeMove = function($block){
 		this.game.playMove(pos);
 		this.updateTile(this.game.grid);
 	} catch(e){
-		alert("Invalid move! Try again");
+		let msg = document.querySelector('#msg');
+		msg.textContent = "Invalid move! Try again";
+		setTimeout(this.removeAlert.bind(this), 1000);
 		return;
 	}
 
@@ -255,6 +270,11 @@ GameView.prototype.makeMove = function($block){
 		this.$el.off("click");
 		this.$el.addClass("game-over");
 	}
+};
+
+GameView.prototype.removeAlert = function(){
+	let msg = document.querySelector('#msg');
+	msg.textContent = "";
 };
 
 GameView.prototype.setupBoard = function(){
@@ -303,12 +323,12 @@ GameView.prototype.applyClass = function(element, className){
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = Grid;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tile__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tile__ = __webpack_require__(1);
 
 
 function Grid (size){
@@ -402,19 +422,6 @@ Grid.prototype.withinBounds = function (pos) {
 // };
 
 
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = Tile;
-
-function Tile (position, value){
-	this.x = position.x;
-	this.y = position.y;
-	this.value = value;
-}
 
 /***/ })
 /******/ ]);
