@@ -8,16 +8,21 @@ export const Game = function(size){
 	this.insertTile();
 };
 
-Game.prototype.playMove = function(pos){
+Game.prototype.playMove = function(pos, val){
+
 	const shareBorderBlocks = this.shareBorderBlocks(this.grid.rows, pos);
 	const that = this;
 	if(shareBorderBlocks.length > 1){
-		shareBorderBlocks.forEach(
-			function(block_pos){
-				that.removeTile({x: block_pos[0], y: block_pos[1]});
-			});
-		this.reArrange();
-		this.insertTile();
+		for(let i = 1; i < shareBorderBlocks.length; i++){
+			that.removeTile({x: shareBorderBlocks[i][0], y: shareBorderBlocks[i][1]});
+		}
+		// console.log(shareBorderBlocks, "shareBorderBlocks");
+		const position = {x: pos[0], y: pos[1]};
+		const newTile = new Tile(position,val + 1);
+		this.grid.insertTile(newTile);
+		// console.log(newTile, "newTile");
+		// this.reArrange();
+		// this.insertTile();
 
 	} else{	
 		throw new Error('error');
@@ -108,4 +113,5 @@ Game.prototype.isOver = function(){
 
 Game.prototype.removeTile = function(tile){
 	return this.grid.removeTile(tile);
+
 };

@@ -18,12 +18,25 @@ GameView.prototype.bindEvent = function(){
 };	
 
 GameView.prototype.makeMove = function($block){
-
 	const pos = $block.data("pos");
-	// console.log(this.game.grid.rows, "grid!!");
+	const val = parseInt($block.context.innerText);
+
+	if(this.game.isOver()){
+		this.$el.off("click");
+		this.$el.addClass("game-over");
+		let msg = document.querySelector('#msg');
+		msg.textContent = "You Win!";
+	}
+	
 	try {
-		this.game.playMove(pos);
+		this.game.playMove(pos, val);
 		this.updateTile(this.game.grid);
+		this.game.reArrange();
+		const grid = this.game.grid;
+		const that = this;
+		setTimeout(function(){ return that.updateTile(grid);}, 500);
+		setTimeout(function(){that.game.insertTile();}, 1000);
+		setTimeout(function(){ return that.updateTile(grid);}, 1500);
 	} catch(e){
 		let msg = document.querySelector('#msg');
 		msg.textContent = "Invalid move! Try again";
@@ -31,10 +44,7 @@ GameView.prototype.makeMove = function($block){
 		return;
 	}
 
-	if(this.game.isOver()){
-		this.$el.off("click");
-		this.$el.addClass("game-over");
-	}
+	
 };
 
 GameView.prototype.removeAlert = function(){
@@ -60,17 +70,19 @@ GameView.prototype.setupBoard = function(){
 
 GameView.prototype.updateTile = function(grid){
 	const that = this;
-    // console.log("row-view", grid.rows);
-	grid.rows.forEach(function (row) {
-      row.forEach(function (block) {
-        if (block) {
-          that.addTile(block);
-        }
-      });
-    });
+	console.log(grid,"grid");
+    for (let row_idx = 0; row_idx < grid.rows.length; row_idx ++){
+    	for (let col_idx = 0; col_idx < grid.rows[row_idx].length; col_idx ++){
+    		if (grid.rows[row_idx][col_idx]){
+    			that.addTile(grid.rows[row_idx][col_idx]);
+    		} else{
+    			that.removeTile([row_idx, col_idx]);
+    		}
+    	}
+    }
 };
 
-GameView.prototype.addTile = function(block){	
+GameView.prototype.addTile = function(block){
 	var inner = document.createElement("div");
 	inner.textContent = block.value;
 	var className = "tile " + "tile-position-"+ block.x + "-" + block.y + " value-" + block.value;
@@ -79,6 +91,15 @@ GameView.prototype.addTile = function(block){
 	li.setAttribute("id", block.value);
 	$(li).empty();
 	$(li).wrapInner(inner);
+};
+
+GameView.prototype.removeTile = function(block){
+	const className = block[0] + "-" + block[1];
+	const parentNode = document.getElementsByClassName(className);
+	if (parentNode[0].childNodes[0]){
+		parentNode[0].childNodes[0].remove();
+		parentNode[0].setAttribute("id", 0);
+	}
 };
 
 GameView.prototype.applyClass = function(element, className){
